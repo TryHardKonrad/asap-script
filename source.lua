@@ -609,6 +609,13 @@ local Button4 = SCTab:CreateButton({
    end,
 })
 
+local Button6 = SCTab:CreateButton({
+   Name = "SimpleSpy",
+   Callback = function()
+        loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpyBeta.lua"))()
+   end,
+})
+
 local Button5 = SCTab:CreateButton({
    Name = "DeX",
    Callback = function()
