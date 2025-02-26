@@ -5,14 +5,14 @@ local Window = Rayfield:CreateWindow({
    LoadingTitle = "A$AP INTERACTIVE",
    LoadingSubtitle = "by _thkonrad",
    ConfigurationSaving = {
-      Enabled = false,
-      FolderName = nil, -- Create a custom folder for your hub/game
+      Enabled = true,
+      FolderName = asap, -- Create a custom folder for your hub/game
       FileName = "A$AP SCRIPT"
    },
    Discord = {
-      Enabled = false,
-      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
-      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+      Enabled = true,
+      Invite = "https://discord.gg/dyWvWjGt", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = false -- Set this to false to make them join the discord every time they load it up
    },
    KeySystem = false, -- Set this to true to use our key system
    KeySettings = {
@@ -540,9 +540,37 @@ local Slider = MainTab:CreateSlider({
     end,
 })
 
-
-
-
+local ToggleInvisible = MainTab:CreateToggle({
+    Name = "Invisible",
+    CurrentValue = false,
+    Flag = "Toggle10",
+    Callback = function(Value)
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        
+        if Value then -- Włączenie niewidzialności
+            for _, part in pairs(character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.Transparency = 1
+                elseif part:IsA("Decal") then
+                    part.Transparency = 1
+                end
+            end
+            -- Zachowanie głowy dla minimapy/kamer
+            if character:FindFirstChild("Head") then
+                character.Head.Transparency = 0.99
+            end
+        else -- Wyłączenie niewidzialności
+            for _, part in pairs(character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.Transparency = 0
+                elseif part:IsA("Decal") then
+                    part.Transparency = 0
+                end
+            end
+        end
+    end,
+})
 
 
 
