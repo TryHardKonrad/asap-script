@@ -540,35 +540,39 @@ local Slider = MainTab:CreateSlider({
     end,
 })
 
+local function ToggleInvisibility(enabled)
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    
+    if enabled then
+        for _, part in pairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.Transparency = 1
+            elseif part:IsA("Decal") then
+                part.Transparency = 1
+            end
+        end
+        if character:FindFirstChild("Head") then
+            character.Head.Transparency = 0.99
+        end
+    else
+        for _, part in pairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.Transparency = 0
+            elseif part:IsA("Decal") then
+                part.Transparency = 0
+            end
+        end
+    end
+end
+
+-- Dodanie do menu
 local ToggleInvisible = MainTab:CreateToggle({
     Name = "Invisible",
     CurrentValue = false,
     Flag = "Toggle10",
     Callback = function(Value)
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        
-        if Value then -- Włączenie niewidzialności
-            for _, part in pairs(character:GetDescendants()) do
-                if part:IsA("BasePart") then
-                    part.Transparency = 1
-                elseif part:IsA("Decal") then
-                    part.Transparency = 1
-                end
-            end
-            -- Zachowanie głowy dla minimapy/kamer
-            if character:FindFirstChild("Head") then
-                character.Head.Transparency = 0.99
-            end
-        else -- Wyłączenie niewidzialności
-            for _, part in pairs(character:GetDescendants()) do
-                if part:IsA("BasePart") then
-                    part.Transparency = 0
-                elseif part:IsA("Decal") then
-                    part.Transparency = 0
-                end
-            end
-        end
+        ToggleInvisibility(Value)
     end,
 })
 
